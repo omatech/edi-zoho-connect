@@ -1,0 +1,27 @@
+{
+  "name": "omatech/edi-zoho-connect",
+  "license": "MIT",
+  "description": "Send forms to zoho",
+  "authors": [
+    {
+      "name": "Sònia Arroyo",
+      "email": "sarroyo@omatech.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.5",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Omatech\\EdiZohoConnect\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Omatech\\EdiZohoConnect\\EdiZohoConnectServiceProvider"
+      ]
+    }
+  }
+}

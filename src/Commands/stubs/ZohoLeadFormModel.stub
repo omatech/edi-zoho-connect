@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use Omatech\EdiZohoConnect\Abstractions\LeadZohoFormAbstraction;
+
+class DummyClass extends LeadZohoFormAbstraction
+{
+    public function getFuenteDeFormulario(): string
+    {
+        // TODO: Implement getFuenteDeFormulario() method.
+    }
+
+    public function getFormType(): string
+    {
+        // TODO: Implement getFormType() method.
+    }
+}

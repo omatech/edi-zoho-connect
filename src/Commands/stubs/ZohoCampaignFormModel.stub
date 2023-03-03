@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use Omatech\EdiZohoConnect\Abstractions\CampaignsZohoFormAbstraction;
+
+class DummyClass extends CampaignsZohoFormAbstraction
+{
+    public function getListId(): string
+    {
+        // TODO: Implement getListId() method.
+    }
+
+    public function getFormType(): string
+    {
+        // TODO: Implement getFormType() method.
+    }
+}
