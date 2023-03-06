@@ -15,14 +15,14 @@ class CreateZohoFormsTable extends Migration
     {
         Schema::create('zoho_forms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('inst_id');
+            $table->string('inst_id')->nullable();
             $table->string('language');
             $table->string('status');
-            $table->string('email_admin');
+            $table->string('email_admin')->nullable();
             $table->string('form');
-            $table->json('data');
-            $table->string('url');
-            $table->json('data_api');
+            $table->json('data')->nullable();
+            $table->string('url')->nullable();
+            $table->json('data_api')->nullable();
             $table->timestamps();
         });
     }

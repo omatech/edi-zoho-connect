@@ -2,7 +2,7 @@
 
 namespace Omatech\EdiZohoConnect\Contracts;
 
-interface LeadContactFormInterface extends ZohoFormInterface
+interface LeadZohoFormInterface extends ZohoFormInterface
 {
     public function getNotes(): array;
 

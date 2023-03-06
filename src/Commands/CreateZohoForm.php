@@ -2,13 +2,6 @@
 
 namespace Omatech\EdiZohoConnect\Commands;
 
-use App\Console\Commands\ContactForms\BlogContactForm;
-use App\Console\Commands\ContactForms\ClientContactForm;
-use App\Console\Commands\ContactForms\ContactContactForm;
-use App\Console\Commands\ContactForms\ContactLandingContactForm;
-use App\Console\Commands\ContactForms\LandingContactForm;
-use App\Console\Commands\ContactForms\NewsletterContactForm;
-use App\Models\Eloquent\ContactForm;
 use Illuminate\Console\Command;
 
 class CreateZohoForm extends Command
@@ -43,10 +36,9 @@ class CreateZohoForm extends Command
     public function handle(): void
     {
         $className = $this->ask('Filename?');
+        $zohoEndpoint = $this->choice('Choose zoho endpoint:', array_keys($this->getFormStubs()));
 
-        $formType = $this->choice('Choose form type:', array_keys($this->getFormStubs()));
-
-        $this->createFormClass($className, $formType);
+        $this->createFormClass($className, $zohoEndpoint);
     }
 
     private function getFormStubs(): array
@@ -57,7 +49,7 @@ class CreateZohoForm extends Command
         ];
     }
 
-    public function createFormClass($className, $formType)
+    public function createFormClass($className, $zohoEndpoint)
     {
         $path = app_path() . '/Models/ZohoForms/';
         $replace = [];
@@ -69,7 +61,7 @@ class CreateZohoForm extends Command
         if (!file_exists($path . $className . '.php')) {
             $stubFiles = $this->getFormStubs();
 
-            $stubFile = $stubFiles[$formType];
+            $stubFile = $stubFiles[$zohoEndpoint];
             $file = file_get_contents(__DIR__ . "/stubs/$stubFile.stub");
 
             $replace["DummyNamespace"] = 'App\Models\ZohoForms';

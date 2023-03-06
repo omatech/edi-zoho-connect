@@ -10,9 +10,4 @@ class DummyClass extends CampaignsZohoFormAbstraction
     {
         // TODO: Implement getListId() method.
     }
-
-    public function getFormType(): string
-    {
-        // TODO: Implement getFormType() method.
-    }
 }

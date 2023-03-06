@@ -2,15 +2,8 @@
 
 namespace Omatech\EdiZohoConnect\Commands;
 
-use App\Console\Commands\ContactForms\BlogContactForm;
-use App\Console\Commands\ContactForms\ClientContactForm;
-use App\Console\Commands\ContactForms\ContactContactForm;
-use App\Console\Commands\ContactForms\ContactLandingContactForm;
-use App\Console\Commands\ContactForms\LandingContactForm;
-use App\Console\Commands\ContactForms\NewsletterContactForm;
-
-use Omatech\EdiZohoConnect\Models\ZohoForm;
 use Illuminate\Console\Command;
+use Omatech\EdiZohoConnect\Models\ZohoForm;
 
 class SendForms extends Command
 {
@@ -29,37 +22,19 @@ class SendForms extends Command
     protected $description = 'Send info from all eDiversa forms';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      */
     public function handle(): void
     {
-        if (env('SEND_FORMS') && env('SEND_FORMS') === true) {
+        if (env('ZOHO_SEND_FORMS') && env('ZOHO_SEND_FORMS') === true) {
             echo("Start send info eDiversa Forms\n");
 
-            $zohoForms = ZohoForm::where('status', 'pending')->get();
-
-            foreach ($zohoForms as $zohoForm) {
-                $formsClasses = [
-                    'newsletter' => NewsletterContactForm::class,
-                    'blog' => BlogContactForm::class,
-                    'contact' => ContactContactForm::class,
-                    'client' => ClientContactForm::class,
-                    'contact_landing' => ContactLandingContactForm::class,
-                    'landing' => LandingContactForm::class,
-                ];
-
-                (new $formsClasses[$zohoForm['form']]($zohoForm))->sendToZoho();
-            }
+            ZohoForm::where('status', 'pending')->each(function (ZohoForm $zohoForm) {
+                (new $zohoForm['form'])
+                    ->setZohoForm($zohoForm)
+                    ->setRawAttributes($zohoForm->getAttributes(), true)
+                    ->send();
+            });
 
             echo("\nFinish send info eDiversa Forms\n");
         } else {

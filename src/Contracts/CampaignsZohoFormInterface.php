@@ -2,7 +2,7 @@
 
 namespace Omatech\EdiZohoConnect\Contracts;
 
-interface CampaignsContactFormInterface extends ZohoFormInterface
+interface CampaignsZohoFormInterface extends ZohoFormInterface
 {
     public function getListId(): string;
 }

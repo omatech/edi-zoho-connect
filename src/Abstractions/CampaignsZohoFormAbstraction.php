@@ -2,20 +2,18 @@
 
 namespace Omatech\EdiZohoConnect\Abstractions;
 
-use App\Console\Commands\ContactForms\Interfaces\CampaignsContactFormInterface;
+use Omatech\EdiZohoConnect\Contracts\CampaignsZohoFormInterface;
 use Psr\Http\Message\ResponseInterface;
 
-abstract class CampaignsZohoFormAbstraction extends ZohoFormAbstraction implements CampaignsContactFormInterface
+abstract class CampaignsZohoFormAbstraction extends ZohoFormAbstraction implements CampaignsZohoFormInterface
 {
     public function sendToZoho(): ResponseInterface
     {
-        $data = $this->contactForm->data;
-
         return $this->client->request('PUT',
             $this->zohoURL . '/campaigns/Contacts/' . $this->getListId() . '?token=' . $this->zohoToken,
             [
                 'headers' => ['Content-Type' => 'application/json'],
-                'body' => json_encode(['emails' => [$data['email']]]),
+                'body' => json_encode(['emails' => [$this->data['email']]]),
                 'http_errors' => true
             ]
         );

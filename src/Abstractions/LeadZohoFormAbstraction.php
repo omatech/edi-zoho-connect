@@ -2,10 +2,10 @@
 
 namespace Omatech\EdiZohoConnect\Abstractions;
 
-use App\Console\Commands\ContactForms\Interfaces\LeadContactFormInterface;
+use Omatech\EdiZohoConnect\Contracts\LeadZohoFormInterface;
 use Psr\Http\Message\ResponseInterface;
 
-abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements LeadContactFormInterface
+abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements LeadZohoFormInterface
 {
     public function sendToZoho(): ResponseInterface
     {
@@ -43,7 +43,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
 
     public function getFormData(): array
     {
-        $dataContact = $this->contactForm->data;
+        $dataContact = $this->data;
 
         return [
             'Owner' => $this->zohoOwner,
@@ -68,17 +68,17 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'RGPD' => ($data['checkbox_notifications'] ?? null) == 'on' ? $this->getRgpdValues() : null,
             'Lead_Status' => 'Sin contactar',
             'Ads_Campaign' => "---",
-            'Ads_URL' => $this->contactForm['url'],
+            'Ads_URL' => $this['url'],
         ];
     }
 
     public function getNotes(): array
     {
-        $dataContact = $this->contactForm->data;
+        $dataContact = $this->data;
 
         return [
             'Title' => "Comentarios del cliente (web)",
-//            'Content' => $this->contactForm->data['message'] ?? null,
+//            'Content' => $this->data['message'] ?? null,
             'Content' => implode("", [
                 $dataContact['comments'] ?? null,
                 "\n ¿trabajas con EDI? " . (($dataContact['edi'] ?? null) == 1 ? 'SI' : 'NO') . ". \n",
@@ -97,7 +97,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'Survey' => false,
             'Consent' => "Correo electrónico",
             'Status' => "Consentimiento - Obtenido",
-            'Date' => $this->contactForm['created_at']->timestamp * 1000,
+            'Date' => $this['created_at']->timestamp * 1000,
         ];
     }
 }

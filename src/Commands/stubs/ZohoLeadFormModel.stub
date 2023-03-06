@@ -10,9 +10,4 @@ class DummyClass extends LeadZohoFormAbstraction
     {
         // TODO: Implement getFuenteDeFormulario() method.
     }
-
-    public function getFormType(): string
-    {
-        // TODO: Implement getFormType() method.
-    }
 }

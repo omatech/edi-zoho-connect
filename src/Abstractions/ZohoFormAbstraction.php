@@ -2,9 +2,13 @@
 
 namespace Omatech\EdiZohoConnect\Abstractions;
 
+use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Mail;
 use Omatech\EdiZohoConnect\Contracts\ZohoFormInterface;
+use Omatech\EdiZohoConnect\Mails\ZohoErrorMail;
 use Omatech\EdiZohoConnect\Models\ZohoForm;
 use function env;
 
@@ -13,43 +17,44 @@ abstract class ZohoFormAbstraction extends ZohoForm implements ZohoFormInterface
     protected $zohoOwner;
     protected $zohoURL;
     protected $zohoToken;
+    protected $zohoForm;
     protected $client;
-    protected $contactForm;
 
-    public function __construct($contactFormData)
+    public function __construct($zohoFormData = [])
     {
-        $this->zohoOwner = env('ENDPOINT_OWNER');
-        $this->zohoURL = env('ENDPOINT_URL');
-        $this->zohoToken = env('ENDPOINT_TOKEN');
+        $this->zohoOwner = env('ZOHO_OWNER');
+        $this->zohoURL = env('ZOHO_URL');
+        $this->zohoToken = env('ZOHO_TOKEN');
         $this->client = new Client();
 
-        parent::__construct(array_merge([
-            'status' => 'pending',
-            'form' => $this->getFormType(),
-        ], $contactFormData));
+        parent::__construct($zohoFormData);
+    }
+
+    public function setZohoForm($zohoForm): ZohoFormAbstraction
+    {
+        $this->zohoForm = $zohoForm;
+        return $this;
     }
 
     public function send(): void
     {
-        $contactForm = $this->contactForm;
-
         try {
             $response = $this->sendToZoho();
-            $contactForm['status'] = 'send';
-            $contactForm['data_api'] = addslashes(json_encode($contactForm['data']));
-            echo "\nSend contact form OK: " . $contactForm['id'] . " status: " . $response->getStatusCode();
-            $contactForm->save();
+            $this->zohoForm->update([
+                'status' => 'send',
+                'data_api' => $this['data'],
+            ]);
 
-        } catch (GuzzleException|\Exception $e) {
-            $contactForm['status'] = 'error';
-            $contactForm['data_api'] = addslashes(json_encode($e->getMessage()));
-            $this->notifyError($e);
-            echo "\nSendNewsletter Error: " . $contactForm['id'] . " " . $e->getMessage();
+            echo "\nSend zoho form OK: " . $this['id'] . " status: " . $response->getStatusCode();
+
+        } catch (ClientException|RequestException|Exception $e) {
+            $this->zohoForm->update([
+                'status' => 'error',
+                'data_api' => $e->getMessage()
+            ]);
+
+            Mail::send(new ZohoErrorMail($this->zohoForm));
+            echo "\nSend zoho form Error: " . $this['id'] . " " . $e->getMessage();
         }
-    }
-
-    private function notifyError($e)
-    {
-        //todo si hi ha error enviar email (agafar email del .env) amb les dades del formulari i l'error
     }
 }

@@ -8,10 +8,10 @@
 You can install the package via composer:
 
 ```bash
-composer require omatech/zoho-forms
+composer require omatech/edi-zoho-connect
 ```
 
-Create ``contact_forms`` table.
+Create ``zoho_forms`` table.
 
 ```bash
 php artisan migrate
@@ -20,9 +20,11 @@ php artisan migrate
 Add to ``.env`` the following keys to connect to ZOHO:
 
 ````
-ENDPOINT_OWNER
-ENDPOINT_URL
-ENDPOINT_TOKEN
+ZOHO_OWNER
+ZOHO_URL
+ZOHO_TOKEN
+ZOHO_SEND_FORMS=true
+ZOHO_ERROR_MAIL_TO=
 ````
 
 ## Usage
