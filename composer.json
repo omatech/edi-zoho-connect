@@ -9,7 +9,7 @@
     }
   ],
   "require": {
-    "guzzlehttp/guzzle": "^7.5",
+    "guzzlehttp/guzzle": "*",
     "ext-json": "*"
   },
   "autoload": {
