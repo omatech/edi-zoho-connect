@@ -1,7 +1,7 @@
 # Edi Zoho Connect
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/omatech/zoho-forms.svg?style=flat-square)](https://packagist.org/packages/omatech/zoho-forms)
-[![Total Downloads](https://img.shields.io/packagist/dt/omatech/zoho-forms.svg?style=flat-square)](https://packagist.org/packages/omatech/zoho-forms)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/omatech/zoho-forms.svg?style=flat-square)](https://packagist.org/packages/omatech/edi-zoho-connect)
+[![Total Downloads](https://img.shields.io/packagist/dt/omatech/zoho-forms.svg?style=flat-square)](https://packagist.org/packages/omatech/edi-zoho-connect)
 
 ## Installation
 
