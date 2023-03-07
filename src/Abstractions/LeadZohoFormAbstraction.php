@@ -65,7 +65,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
                 'silicie' => "SILICIE",
                 'custom_devel' => "Desarrollos a Medida",
             ][$dataContact['solution']]: null,
-            'RGPD' => ($data['checkbox_notifications'] ?? null) == 'on' ? $this->getRgpdValues() : null,
+            'RGPD' => ($dataContact['checkbox_notifications'] ?? null) == 'on' ? $this->getRgpdValues() : null,
             'Lead_Status' => 'Sin contactar',
             'Ads_Campaign' => "---",
             'Ads_URL' => $this['url'],
