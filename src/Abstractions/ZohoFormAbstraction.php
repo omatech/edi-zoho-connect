@@ -18,7 +18,6 @@ abstract class ZohoFormAbstraction extends ZohoForm implements ZohoFormInterface
     protected $zohoURL;
     protected $zohoToken;
     protected $zohoForm;
-    protected $form;
     protected $client;
 
     public function __construct($zohoFormData = [])
@@ -27,8 +26,7 @@ abstract class ZohoFormAbstraction extends ZohoForm implements ZohoFormInterface
         $this->zohoURL = env('ZOHO_URL');
         $this->zohoToken = env('ZOHO_TOKEN');
         $this->client = new Client();
-        $this->form = get_class($this);
-
+        $this->attributes['form'] = get_class($this);
         parent::__construct($zohoFormData);
     }
 
