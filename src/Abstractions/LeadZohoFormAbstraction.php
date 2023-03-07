@@ -58,7 +58,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'Owner' => $this->zohoOwner,
             'Company' => $dataContact['company'] ?? null,
             'Description' => '**Contacto creado o actualizado desde eDiversa**',
-            'Cargo' => $dataContact['position'] ?? null,
+            'Cargo' => $dataContact['position'] ?? '-',
             'First_Name' => $dataContact['name'] ?? '-',
             'Last_Name' => $dataContact['surname'] ?? '-',
             'Full_Name' => ($dataContact['name'] ?? "-") . " " . ($dataContact['surname'] ?? ""),
@@ -87,8 +87,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
 
         return [
             'Title' => "Comentarios del cliente (web)",
-//            'Content' => $this->data['message'] ?? null,
-            'Content' => implode("", [
+            'Content' => $dataContact['message'] ?? implode("", [
                 $dataContact['comments'] ?? null,
                 "\n ¿trabajas con EDI? " . (($dataContact['edi'] ?? null) == 1 ? 'SI' : 'NO') . ". \n",
                 " Punto operacional (GLN): " . $dataContact['gln'] . "\n",
