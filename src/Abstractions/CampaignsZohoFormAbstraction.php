@@ -13,9 +13,14 @@ abstract class CampaignsZohoFormAbstraction extends ZohoFormAbstraction implemen
             $this->zohoURL . '/campaigns/Contacts/' . $this->getListId() . '?token=' . $this->zohoToken,
             [
                 'headers' => ['Content-Type' => 'application/json'],
-                'body' => json_encode(['emails' => [$this->data['email']]]),
+                'body' => json_encode($this->getZohoData()),
                 'http_errors' => true
             ]
         );
+    }
+
+    public function getZohoData(): array
+    {
+        return ['emails' => [$this->data['email']]];
     }
 }

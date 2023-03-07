@@ -9,10 +9,14 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
 {
     public function sendToZoho(): ResponseInterface
     {
-        $data = array_filter($this->getFormData());
-
         $urlClientLeads = $this->zohoURL . '/crm/Leads?token=' . $this->zohoToken;
-        $response = $this->client->request('POST', $urlClientLeads, ['headers' => ['Content-Type' => 'application/json'], 'body' => json_encode($data)]);
+
+        $response = $this->client->request(
+            'POST',
+            $urlClientLeads,
+            ['headers' => ['Content-Type' => 'application/json'],
+            'body' => json_encode(array_filter($this->getFormData()))
+        ]);
 
         if (!in_array($response->getStatusCode(), [200, 202])) {
             throw new \Exception($response);
@@ -41,6 +45,11 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
         return $response;
     }
 
+    public function getZohoData(): array
+    {
+        return array_merge(array_filter($this->getFormData()), $this->getNotes());
+    }
+
     public function getFormData(): array
     {
         $dataContact = $this->data;
@@ -56,7 +65,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'Email' => $dataContact['email'] ?? null,
             'Phone' => $dataContact['phone'] ?? null,
             'Fuente_de_formulario' => $this->getFuenteDeFormulario(),
-            'Interesado_en' => $dataContact['solution'] ? [
+            'Interesado_en' => isset($dataContact['solution']) ? [
                 'edi' => "EDI",
                 'factura_aapp' => "Factura AAPP",
                 'factura_part' => "Factura particulares",
@@ -64,7 +73,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
                 'portal_construc' => "Portal construcción",
                 'silicie' => "SILICIE",
                 'custom_devel' => "Desarrollos a Medida",
-            ][$dataContact['solution']]: null,
+            ][$dataContact['solution']] : null,
             'RGPD' => ($dataContact['checkbox_notifications'] ?? null) == 'on' ? $this->getRgpdValues() : null,
             'Lead_Status' => 'Sin contactar',
             'Ads_Campaign' => "---",
