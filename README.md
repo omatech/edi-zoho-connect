@@ -11,6 +11,16 @@ You can install the package via composer:
 composer require omatech/edi-zoho-connect
 ```
 
+If provider is not added automatically add the following line to ``config/app.php``:
+
+````
+'providers' => [
+    ...
+    Omatech\EdiZohoForms\EdiZohoConnectServiceProvider::class,
+    ...
+ ]
+````
+
 Create ``zoho_forms`` table.
 
 ```bash
