@@ -151,17 +151,21 @@
                             <td width="5%"/>
                             <td align="left" width="90%">
                                 <table width="100%" cellspacing="0" cellpadding="0">
-                                    @foreach($zohoForm->data as $fieldName => $fieldValue)
+                                    @foreach($data as $fieldName => $fieldValue)
                                         <tr>
-                                            <td width="35%"
-                                                style="padding:5px;padding-left:20px;border-bottom: 1px solid rgb(230,230,230)">
+                                            <td width="35%" style="padding:5px;padding-left:20px;border-bottom: 1px solid rgb(230,230,230)">
                                                 <div
                                                         style="font-weight:bold;font-size:14px;color:rgb(177,0,53);text-align:left">
                                                     {{$fieldName}}</div>
                                             </td>
-                                            <td width="65%"
-                                                style="word-break:break-all;padding:5px;border-bottom: 1px solid rgb(230,230,230)">
-                                                <div style="text-align:left;font-size:14px">{!! $fieldValue ?? '' !!}</div>
+                                            <td width="65%" style="word-break:break-all;padding:5px;border-bottom: 1px solid rgb(230,230,230)">
+                                                @if (is_array($fieldValue))
+                                                    @foreach($fieldValue as $value)
+                                                        <div style="text-align:left;font-size:14px">{!! $value ?? '' !!}</div>
+                                                    @endforeach
+                                                @else
+                                                    <div style="text-align:left;font-size:14px">{!! $fieldValue ?? '' !!}</div>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -183,7 +187,20 @@
                             <td align="left" width="90%">
                                 <div
                                         style="font-weight:bold;font-size:14px;color:rgb(177,0,53);text-align:left">
-                                    {{json_encode($zohoForm->data_api)}}</div>
+                                    {{$error}}</div>
+                            </td>
+                            <td width="5%"/>
+                        </tr>
+                        <tr>
+                            <td align="left" width="100%">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="5%"/>
+                            <td align="left" width="90%">
+                                <div
+                                        style="font-weight:bold;font-size:14px;text-align:left">
+                                    {{json_encode($data)}}</div>
                             </td>
                             <td width="5%"/>
                         </tr>

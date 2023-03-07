@@ -5,13 +5,13 @@ namespace Omatech\EdiZohoConnect\Mails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Omatech\EdiZohoConnect\Models\ZohoForm;
 
 class ZohoErrorMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $zohoForm;
+    private $error;
+    private $data;
 
     /**
      * Create a new message instance.
@@ -19,10 +19,12 @@ class ZohoErrorMail extends Mailable
      * @return void
      */
     public function __construct(
-        ZohoForm $zohoForm
+        array  $data,
+        string $error
     )
     {
-        $this->zohoForm = $zohoForm;
+        $this->data = $data;
+        $this->error = $error;
     }
 
     /**
@@ -30,8 +32,13 @@ class ZohoErrorMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): ZohoErrorMail
     {
-        return $this->to(env('ZOHO_ERROR_MAIL_TO'))->view('edi-zoho-connect::zoho-error-mail', ['zohoForm' => $this->zohoForm]);
+        return $this
+            ->to(env('ZOHO_ERROR_MAIL_TO'))
+            ->view('edi-zoho-connect::zoho-error-mail', [
+                'data' => $this->data,
+                'error' => $this->error,
+            ]);
     }
 }

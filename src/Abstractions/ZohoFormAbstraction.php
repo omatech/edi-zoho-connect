@@ -53,7 +53,7 @@ abstract class ZohoFormAbstraction extends ZohoForm implements ZohoFormInterface
                 'data_api' => $e->getMessage()
             ]);
 
-            Mail::send(new ZohoErrorMail($this->zohoForm));
+            Mail::send(new ZohoErrorMail($this->getZohoData(), $e->getMessage()));
             echo "\nSend zoho form Error: " . $this['id'] . " " . $e->getMessage();
         }
     }
