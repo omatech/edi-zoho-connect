@@ -90,9 +90,9 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'Content' => $dataContact['message'] ?? implode("", [
                 $dataContact['comments'] ?? null,
                 "\n ¿trabajas con EDI? " . (($dataContact['edi'] ?? null) == 1 ? 'SI' : 'NO') . ". \n",
-                " Punto operacional (GLN): " . $dataContact['gln'] . "\n",
-                " Red: " . $dataContact['red_edi'] . "\n",
-                " Interlocutor: " . $dataContact['interlocutor'] . "\n",
+                " Punto operacional (GLN): " . ($dataContact['gln'] ?? '') . "\n",
+                " Red: " . ($dataContact['red_edi'] ?? '') . "\n",
+                " Interlocutor: " . ($dataContact['interlocutor'] ?? '') . "\n",
             ])
         ];
     }

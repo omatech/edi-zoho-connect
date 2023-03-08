@@ -47,6 +47,15 @@ Create your own forms using the following command:
 php artisan zoho-forms:create
 ```
 
+Example:
+```
+new DummyForm([
+    'language' => 'es',
+    'data' => request()->all(),
+    'url' => url()->previous()
+]);
+```
+
 It will ask the filename and the zoho form type (leads/campaigns)
 
 Once the file is created you can overwrite the content to adapt it to your needs.
