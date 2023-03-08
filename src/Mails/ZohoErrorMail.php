@@ -34,8 +34,10 @@ class ZohoErrorMail extends Mailable
      */
     public function build(): ZohoErrorMail
     {
+        $recipients = explode(';', env('ZOHO_ERROR_MAIL_TO'));
+
         return $this
-            ->to(env('ZOHO_ERROR_MAIL_TO'))
+            ->to($recipients)
             ->view('edi-zoho-connect::zoho-error-mail', [
                 'data' => $this->data,
                 'error' => $this->error,

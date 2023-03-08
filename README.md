@@ -37,6 +37,8 @@ ZOHO_SEND_FORMS=true
 ZOHO_ERROR_MAIL_TO=
 ````
 
+In case you want the ``ZOHO_ERROR_MAIL_TO`` to be multiple concatenate mails with ``;``
+
 ## Usage
 
 ### Custom Forms
