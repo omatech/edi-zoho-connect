@@ -183,26 +183,22 @@
 
                     <table width="100%" style="text-align: justify;">
                         <tr>
-                            <td width="5%"/>
-                            <td align="left" width="90%">
+                            <td align="left" width="100%">
                                 <div
                                         style="font-weight:bold;font-size:14px;color:rgb(177,0,53);text-align:left">
                                     {{$error}}</div>
                             </td>
-                            <td width="5%"/>
                         </tr>
                         <tr>
                             <td align="left" width="100%">
                             </td>
                         </tr>
                         <tr>
-                            <td width="5%"/>
-                            <td align="left" width="90%">
+                            <td align="left" width="100%">
                                 <div
                                         style="font-weight:bold;font-size:14px;text-align:left">
                                     {{json_encode($data)}}</div>
                             </td>
-                            <td width="5%"/>
                         </tr>
                     </table>
                     <br/>
