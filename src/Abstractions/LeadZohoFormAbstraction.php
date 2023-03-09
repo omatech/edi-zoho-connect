@@ -65,7 +65,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'Email' => $dataContact['email'] ?? null,
             'Phone' => $dataContact['phone'] ?? null,
             'Fuente_de_formulario' => $this->getFuenteDeFormulario(),
-            'Interesado_en' => isset($dataContact['solution']) ? [
+            'Interesado_en' => isset($dataContact['solution']) ? [[
                 'edi' => "EDI",
                 'factura_aapp' => "Factura AAPP",
                 'factura_part' => "Factura particulares",
@@ -73,7 +73,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
                 'portal_construc' => "Portal construcción",
                 'silicie' => "SILICIE",
                 'custom_devel' => "Desarrollos a Medida",
-            ][$dataContact['solution']] : null,
+            ][$dataContact['solution']]] : null,
             'RGPD' => ($dataContact['checkbox_notifications'] ?? null) == 'on' ? $this->getRgpdValues() : null,
             'Lead_Status' => 'Sin contactar',
             'Ads_Campaign' => "---",
