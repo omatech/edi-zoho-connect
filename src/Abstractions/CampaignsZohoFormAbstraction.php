@@ -9,7 +9,7 @@ abstract class CampaignsZohoFormAbstraction extends ZohoFormAbstraction implemen
 {
     public function sendToZoho(): ResponseInterface
     {
-        return $this->client->request('PUT',
+        $response = $this->client->request('PUT',
             $this->zohoURL . '/campaigns/Contacts/' . $this->getListId() . '?token=' . $this->zohoToken,
             [
                 'headers' => ['Content-Type' => 'application/json'],
@@ -17,6 +17,12 @@ abstract class CampaignsZohoFormAbstraction extends ZohoFormAbstraction implemen
                 'http_errors' => true
             ]
         );
+
+        if (!in_array($response->getStatusCode(), [200, 202])) {
+            throw new \Exception($response);
+        }
+
+        return $response;
     }
 
     public function getZohoData(): array
