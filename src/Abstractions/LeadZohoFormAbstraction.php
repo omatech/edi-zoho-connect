@@ -55,13 +55,15 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
         $dataContact = $this->data;
 
         return [
+            'Date' => $this->created_at->timestamp * 1000,
+            'Idioma' => $dataContact['language'] ?? null,
             'Owner' => $this->zohoOwner,
-            'Company' => $dataContact['company'] ?? null,
-            'Description' => '**Contacto creado o actualizado desde eDiversa**',
             'Cargo' => $dataContact['position'] ?? '-',
             'First_Name' => $dataContact['name'] ?? '-',
             'Last_Name' => $dataContact['surname'] ?? '-',
             'Full_Name' => ($dataContact['name'] ?? "-") . " " . ($dataContact['surname'] ?? ""),
+            'Company' => $dataContact['company'] ?? null,
+            'Description' =>  $data['inquiry'] ?? '**Contacto creado o actualizado desde eDiversa**',
             'Email' => $dataContact['email'] ?? null,
             'Phone' => $dataContact['phone'] ?? null,
             'Fuente_de_formulario' => $this->getFuenteDeFormulario(),
@@ -77,7 +79,7 @@ abstract class LeadZohoFormAbstraction extends ZohoFormAbstraction implements Le
             'RGPD' => ($dataContact['checkbox_notifications'] ?? null) == 'on' ? $this->getRgpdValues() : null,
             'Lead_Status' => 'Sin contactar',
             'Ads_Campaign' => "---",
-            'Ads_URL' => $this['url'],
+            'Ads_URL' => $this['url'] ?? null,
         ];
     }
 

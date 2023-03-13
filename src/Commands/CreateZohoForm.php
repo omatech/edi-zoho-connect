@@ -36,7 +36,7 @@ class CreateZohoForm extends Command
     public function handle(): void
     {
         $className = $this->ask('Filename?');
-        $zohoEndpoint = $this->choice('Choose zoho endpoint:', array_keys($this->getFormStubs()));
+        $zohoEndpoint = $this->choice('Choose zoho endpoint', array_keys($this->getFormStubs()));
 
         $this->createFormClass($className, $zohoEndpoint);
     }
