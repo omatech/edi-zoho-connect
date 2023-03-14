@@ -41,7 +41,7 @@ abstract class ZohoFormAbstraction extends ZohoForm implements ZohoFormInterface
         try {
             $response = $this->sendToZoho();
             $this->zohoForm->update([
-                'status' => 'send',
+                'status' => 'sent',
                 'data_api' => $this->getZohoData(),
             ]);
 
